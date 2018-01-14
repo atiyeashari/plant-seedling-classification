@@ -1,4 +1,4 @@
 data/
 *.idea*
-.idea/*
+.idea/vcs.xml
 *__ pycache __*
