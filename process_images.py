@@ -1,19 +1,23 @@
 import numpy as np
 import os
 import glob
-
+import matplotlib.pyplot as plt
 import cv2
 
 train_path = 'data/train'
 test_path = 'data/test'
 
-image_per_class = {}
-for folder_name in os.listdir(train_path):
-    folder_path = os.path.join(train_path, folder_name)
-    image_per_class[folder_name] = []
-    for image_path in glob.glob(os.path.join(folder_path, "*.png")):
-        rgb_image = cv2.imread(image_path, cv2.IMREAD_COLOR)
-        image_per_class[folder_name].append(rgb_image)
+
+def read_image():
+    image_per_class = {}
+    for folder_name in os.listdir(train_path):
+        folder_path = os.path.join(train_path, folder_name)
+        image_per_class[folder_name] = []
+        for image_path in glob.glob(os.path.join(folder_path, "*.png")):
+            rgb_image = cv2.imread(image_path, cv2.IMREAD_COLOR)
+            image_per_class[folder_name].append(rgb_image)
+            break
+    return image_per_class
 
 
 def create_image_segment(image):
@@ -36,3 +40,17 @@ def sharpen_image(image):
     image_blurred = cv2.GaussianBlur(image, (0, 0), 3)
     image_sharp = cv2.addWeighted(image, 1.5, image_blurred, -0.5, 0)
     return image_sharp
+
+
+def test_sharpen_image():
+    images = read_image()
+    for image in images:
+        image_segment = create_image_segment(images[image][0])
+        sharpened_image = sharpen_image(image_segment)
+        fig, axs = plt.subplots(1, 3, figsize=(20, 20))
+        axs[0].imshow(images[image][0])
+        axs[1].imshow(image_segment)
+        axs[2].imshow(sharpened_image)
+        fig.savefig("tested_images/"+image+".png")
+
+test_sharpen_image()
