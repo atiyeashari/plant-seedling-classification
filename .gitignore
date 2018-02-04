@@ -3,3 +3,4 @@ data/
 .idea/vcs.xml
 *__ pycache __*
 tested_images/
+binary_images/*
