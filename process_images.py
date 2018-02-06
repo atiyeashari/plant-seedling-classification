@@ -16,7 +16,6 @@ def read_image():
         for image_path in glob.glob(os.path.join(folder_path, "*.png")):
             rgb_image = cv2.imread(image_path, cv2.IMREAD_COLOR)
             image_per_class[folder_name].append(rgb_image)
-            break
     return image_per_class
 
 

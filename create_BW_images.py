@@ -1,7 +1,6 @@
 import numpy as np
 import os
 import glob
-import matplotlib.pyplot as plt
 import cv2
 
 train_path = 'data/train'
